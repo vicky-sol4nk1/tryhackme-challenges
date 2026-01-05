@@ -127,7 +127,7 @@ The key was encrypted, meaning a passphrase was required to use it. At this stag
 so save it and crack it
 i used ssh2john to conver in hash so john can understand it for cracking
 and then i simple use john and i get id_rsa:letmein(passphrase key)
----bash
+```bash
 mrbunny $ nano id_rsa
 mrbunny $ ls
 cache  directory-disctory.txt  id_rsa  port-scan.txt
