@@ -20,3 +20,13 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 55.52 seconds
+
+
+
+The scan revealed only two open ports:
+
+22/tcp – SSH
+
+80/tcp – HTTP
+
+Since SSH typically requires valid credentials, I decided to focus on the web service running on port 80, as web applications often provide an initial entry point.
