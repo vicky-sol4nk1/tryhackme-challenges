@@ -31,3 +31,9 @@ The scan revealed only two open ports:
 80/tcp – HTTP
 
 Since SSH typically requires valid credentials, I decided to focus on the web service running on port 80, as web applications often provide an initial entry point.
+```
+<img width="1920" height="1080" alt="Screenshot at 2026-01-04 22-00-21" src="https://github.com/user-attachments/assets/47b56902-5133-4a87-808b-2ff06308f83a" />
+```
+
+
+
