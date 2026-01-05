@@ -19,7 +19,8 @@ PORT   STATE SERVICE
 22/tcp open  ssh
 80/tcp open  http
 
-Nmap done: 1 IP address (1 host up) scanned in 55.52 second```
+Nmap done: 1 IP address (1 host up) scanned in 55.52 second
+```markdown
 
 
 
