@@ -211,7 +211,7 @@ mrbunny $ nikto -h 10.80.160.139
 + /icons/README: Apache default file found. See: https://www.vntweb.co.uk/apache-restricting-access-to-iconsreadme/
 ```
 here nikto detect a vulnerable end point of /cgi-bin/test.cgi it's a vulnerable to shellshock.
-i use my osint skill and found a shellshock exploint by using CVE-2014-6278,and then modified it's so it's work on out target
+i use my osint skill and found a shellshock exploit by using CVE-2014-6278,and then modified it's so it's work on out target
 linke:https://www.exploit-db.com/exploits/39568
 
 
