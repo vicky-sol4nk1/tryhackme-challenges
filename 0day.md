@@ -102,6 +102,14 @@ Starting gobuster in directory enumeration mode
 /secret               (Status: 301) [Size: 314] [--> http://10.80.160.139/secret/]
 ```
 i found some intresting directory i try go watch what intresting i can here found
+![forb at 2026-01-04 22-41-44-crop](https://github.com/user-attachments/assets/e750ab83-3399-492c-ac32-c05b624b6593)
+
+![arc](https://github.com/user-attachments/assets/0963cf0c-0fb6-4a8f-aeeb-faeb3a21e3ca)
+
+![Screenshot at 2026-01-04 22-49-01](https://github.com/user-attachments/assets/2e2e8d0a-ecb5-44dc-b919-497fa058bd80)
+now again it's return blank page,so i now go for /secret endpoint i am sure here we get somehint for next step
+
+
 
 
 
