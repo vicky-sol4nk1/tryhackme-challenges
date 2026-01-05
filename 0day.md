@@ -152,11 +152,32 @@ id_rsa:letmein
 
 1 password hash cracked, 0 left
 mrbunny $
-'''
-
-
 
 ```
+now we can try to login normaly
+```bash
+mrbunny $ ls -l id_rsa
+-rw-r--r-- 1 greatkey greatkey 1766 Jan  4 23:14 id_rsa
+mrbunny $ chmod 400 id_rsa
+mrbunny $ ls -l id_rsa
+-r-------- 1 greatkey greatkey 1766 Jan  4 23:14 id_rsa
+mrbunny $ ssh -i id_rsa turtle@10.80.160.139 
+The authenticity of host '10.80.160.139 (10.80.160.139)' can't be established.
+ED25519 key fingerprint is SHA256:RagPojtI1X12KWTyYetHjXVozjQqsxNmneOUKEjxwU0.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.80.160.139' (ED25519) to the list of known hosts.
+Enter passphrase for key 'id_rsa': 
+Enter passphrase for key 'id_rsa': 
+sign_and_send_pubkey: no mutual signature supported
+turtle@10.80.160.139's password: 
+Permission denied, please try again.
+turtle@10.80.160.139's password: 
+Permission denied, please try again.
+turtle@10.80.160.139's password: 
+turtle@10.80.160.139: Permission denied (publickey,password).
+```
+
 
 
 
