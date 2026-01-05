@@ -40,7 +40,8 @@ i also try to find what web-stack is used here so i try whatweb and wig for more
 http://10.80.160.139/ [200 OK] Apache[2.4.7], Bootstrap[4.3.1], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.7 (Ubuntu)], IP[10.80.160.139], JQuery, Meta-Author[name], Script, Title[0day]
 ```
 
-```mrbunny $ wig http://10.80.160.139/
+```
+mrbunny $ wig http://10.80.160.139/
 
 wig - WebApp Information Gatherer
 
