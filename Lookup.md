@@ -17,7 +17,7 @@
 
 ---
 
-## 🔍 Enumeration
+## 🔍 Enumeration and Scanning
 
 ### Nmap Scan
 
