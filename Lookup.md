@@ -55,7 +55,30 @@ Nmap done: 1 IP address (1 host up) scanned in 222.36 seconds
   
   <img width="1753" height="702" alt="image" src="https://github.com/user-attachments/assets/d4db121e-39d1-4544-a874-63b8d1a8edfe" />
 
-  so first we need to edit our /etc/hosts file open it
+Reason: DNS Resolution Problem 🧠
+
+our system works like this:
+
+Browser sees lookup.thm
+
+It asks DNS:
+👉 “What is the IP address of lookup.thm?”
+
+DNS says:
+❌ “I don’t know this domain”
+
+Because:
+
+lookup.thm is not a real public domain
+
+It exists only inside the TryHackMe lab
+
+
+  so first we need to edit our /etc/hosts file ,so open it using
+  ```bash
+  sudo nano /etc/hosts
+  ```
+  
   ```bash
   sudo nano /etc/hosts
 
@@ -68,6 +91,11 @@ Nmap done: 1 IP address (1 host up) scanned in 222.36 seconds
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ```
+save using it's press ctrl+x and enter hit
+
+now again try to open on browser:
+
+<img width="1913" height="774" alt="image" src="https://github.com/user-attachments/assets/e809ea43-3818-4000-9c3d-a3e602ff4e80" />
 
 
 * Suspected username enumeration vulnerability
