@@ -75,7 +75,19 @@ i use steghide --extract -sf cute-alien.jpg it's asked for password and i try th
 
 <img width="963" height="570" alt="image" src="https://github.com/user-attachments/assets/d0d617e3-00a8-4758-b034-63ee1e24624f" />
 
+in my frist though when author asked for cve number i think he asking for a kernal exploit cve number but i wrong it's actuly asked for sudo version 1.8.21p2, james user has a sudo permision to run /bin/bash with any usser permision expect root users, sudo has a vulnerability ,sudo versions before 1.8.28. At a high level, sudo becomes vulnerable because it doesn't properly check if a specified user ID actually exists or is valid when running commands with elevated privileges. Specifically, if a user has permission to run commands as "any user except root" (a common setup), they can trick sudo by using a special invalid user ID like -1. Sudo interprets -1 as equivalent to 0, which is root's ID, allowing the command to run with full root access despite the restrictions.
 
+you can explor and read your self on this linke
+
+https://www.exploit-db.com/exploits/47502
+
+just type on termial:
+```bash
+sudo -u#-1 /bin/bash
+```
+<img width="1372" height="601" alt="image" src="https://github.com/user-attachments/assets/af59c464-b4ab-4267-913c-ad57fdcf9f3c" />
+
+i hope you understood very well,keep learning and be creative!
 
 
 
