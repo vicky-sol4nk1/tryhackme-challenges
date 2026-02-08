@@ -56,6 +56,20 @@ i think here data is hide into a cute-alien.jpg and cute.png, binwalk is best to
 
 <img width="1689" height="500" alt="image" src="https://github.com/user-attachments/assets/61a87778-cc69-4097-a27d-0a4c48f0ee81" />
 
-cutie.png has zip
+cutie.png file contain hidden zip files lets extract it and see what we can get interesting
+
+<img width="1918" height="369" alt="image" src="https://github.com/user-attachments/assets/e4011ae5-7f0b-48a9-9d33-77da181950a3" />
+
+zip file contain a another secret message but it's encrypted and asked for a password and this is another more time we need to bruteforc,first we use zip2john is a tool used to convert password protected file into hash formate so john can bruteforce it i alread crack it 
+
+<img width="1061" height="619" alt="image" src="https://github.com/user-attachments/assets/8b744090-2df7-462b-af57-2463fda38c0e" />
+
+now we have a password lets try to open 8702.zip and open the file 
+<img width="646" height="505" alt="image" src="https://github.com/user-attachments/assets/43fc9ee3-054c-48ed-a16b-7685ac6b7cfd" />
+
+this file is contain a base64 encoded text i 
+
+
+
 
 
