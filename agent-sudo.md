@@ -17,6 +17,11 @@ Service detection performed. Please report any incorrect results at https://nmap
 # Nmap done at Thu Feb  5 22:12:55 2026 -- 1 IP address (1 host up) scanned in 25.48 seconds
 
 ```
+i try anonymous login on ftp server and i failled,that's mean it's not configure to login with anonymous ,we need to find valid user name and passwords 
+
+<img width="1059" height="233" alt="image" src="https://github.com/user-attachments/assets/0111b51c-9051-4c43-86f7-0eaa537dcabb" />
+
+
 here we see a three ports are open so lets see what running on port 80,
 
 <img width="1911" height="577" alt="image" src="https://github.com/user-attachments/assets/8db544cd-4096-4403-a8f3-3dc60235e1f7" />
@@ -37,3 +42,20 @@ Agent R
 
 
 ```
+now we have a username called chris and it' say a password is weak may be it's indicating on ftp server lets try bruteforce method using assuming chris is username
+
+<img width="1914" height="351" alt="image" src="https://github.com/user-attachments/assets/548d11dd-ed77-455e-9ad2-af8f3b28fc8e" />
+
+now we have username and password,after login successfully i donwload all files 
+
+<img width="1912" height="768" alt="image" src="https://github.com/user-attachments/assets/a6385526-f0ce-47e8-b789-05c576a274cc" />
+
+<img width="1893" height="290" alt="image" src="https://github.com/user-attachments/assets/30e5b4ec-aaab-413f-8ccc-2302f41352be" />
+
+i think here data is hide into a cute-alien.jpg and cute.png, binwalk is best tool to check 
+
+<img width="1689" height="500" alt="image" src="https://github.com/user-attachments/assets/61a87778-cc69-4097-a27d-0a4c48f0ee81" />
+
+cutie.png has zip
+
+
