@@ -111,7 +111,7 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-04-12 09:45:
 
 we found a valid password so now this  time to login using ssh credentials 
 
-and now time to privESC
+i used gtfbin for privESC https://gtfobins.org/gtfobins/tar/ ,here a lin user can run a binary with sudo permision  ,it's a great option for us to privESC to root user 
 ```
 lin@ip-10-49-144-83:~/Desktop$ sudo -l
 [sudo] password for lin: 
