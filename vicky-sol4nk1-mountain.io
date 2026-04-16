@@ -13,3 +13,4 @@ PORT   STATE SERVICE
 # Nmap done at Wed Apr 15 17:54:33 2026 -- 1 IP address (1 host up) scanned in 117.81 seconds
 
 ```
+ port 80 is open,i check and have nginx welcome page by default after i try directory bruteforce to find out hidden pages and something intresting
