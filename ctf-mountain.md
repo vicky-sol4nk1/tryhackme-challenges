@@ -13,4 +13,11 @@ PORT   STATE SERVICE
 # Nmap done at Wed Apr 15 17:54:33 2026 -- 1 IP address (1 host up) scanned in 117.81 seconds
 
 ```
- port 80 is open,i check and have nginx welcome page by default after i try directory bruteforce to find out hidden pages and something intresting
+ port 80 is open,i check and have nginx welcome page by default after i try directory bruteforce to find out hidden pages and something intresting,after bit of time  i fount a directory wordpress
+ that's mean website hosted on wordpress ,but first we need to change our /etc/hosts configuration so website work,it's used virtual hosting somthing they need in hostheader mountaineer.thm
+ lets change it and 
+ ```bash
+nano  /etc/hosts
+10.49.151.94  mountaineer.thm
+```
+
