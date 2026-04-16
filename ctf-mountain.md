@@ -45,7 +45,7 @@ wp-includes          (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordp
 wp-admin             (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-admin/]
 ```
 
-at images have a path traversal so we can read a /etc/passwd file and server important configuration files
+i try bruteforce on wp-admin and i failled so badly it took my so much time so i decided to explore images and othe directories,at images have a path traversal so we can read a /etc/passwd file and server important configuration files
 
 ```
 [7:48] root@prime ~/ctf/mountain # curl http://mountaineer.thm/wordpress/images../etc/passwd
@@ -189,4 +189,8 @@ ff02::2 ip6-allrouters
 after doing this stuff i access and we get a login page,so  i try bruteforce and on found username from /etc/passwd ,and username:k2 and password:k2 works and we get
 
 <img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/da60e366-6654-47cc-a9c4-6b4f28a82a9f" />
+
+<img width="1916" height="997" alt="image" src="https://github.com/user-attachments/assets/97e1e664-d446-486f-977e-22d86c29d197" />
+
+we have a password in second mail,so i tried on /wp-admin th3_tall3st_password_in_th3_world and it's work now we have admin access on worpress site
 
