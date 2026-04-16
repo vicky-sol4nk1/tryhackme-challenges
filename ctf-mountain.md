@@ -23,6 +23,7 @@ nano  /etc/hosts
 
 <img width="1907" height="870" alt="blog" src="https://github.com/user-attachments/assets/295f1728-6686-469c-84bf-29073bd34315" />
 
+```
 7:11] root@prime ~/ctf/mountain # gobuster dir -u http://mountaineer.thm/wordpress -w /usr/share/dirbuster/wordlists/directory-list-2.3-small.txt   
 ===============================================================
 Gobuster v3.8.2
@@ -42,6 +43,7 @@ images               (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordp
 wp-content           (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-content/]
 wp-includes          (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-includes/]
 wp-admin             (Status: 301) [Size: 178] [--> http://mountaineer.thm/wordpress/wp-admin/]
+```
 
 at images have a path traversal so we can read a /etc/passwd file and server important configuration files
 
