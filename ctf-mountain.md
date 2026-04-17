@@ -194,3 +194,121 @@ after doing this stuff i access and we get a login page,so  i try bruteforce and
 
 we have a password in second mail,so i tried on /wp-admin th3_tall3st_password_in_th3_world and it's work now we have admin access on worpress site
 
+
+and i also run a wpscan on wordpress,and it's hase a vulnerablity to upload a remote file which tirgger rce on remote server 
+
+```bash
+rootme:-->wpscan --url http://mountaineer.thm/wordpress/ -e ap,cb,u,dbe --detection-mode aggressive
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.28
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[+] URL: http://mountaineer.thm/wordpress/ [10.49.189.79]
+[+] Started: Fri Apr 17 18:51:53 2026
+
+Interesting Finding(s):
+
+[+] XML-RPC seems to be enabled: http://mountaineer.thm/wordpress/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://mountaineer.thm/wordpress/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://mountaineer.thm/wordpress/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 6.4.3 identified (Insecure, released on 2024-01-30).
+ | Found By: Atom Generator (Aggressive Detection)
+ |  - http://mountaineer.thm/wordpress/?feed=atom, <generator uri="https://wordpress.org/" version="6.4.3">WordPress</generator>
+ | Confirmed By: Style Etag (Aggressive Detection)
+ |  - http://mountaineer.thm/wordpress/wp-admin/load-styles.php, Match: '6.4.3'
+
+[i] The main theme could not be detected.
+
+[+] Enumerating All Plugins (via Passive Methods)
+[+] Checking Plugin Versions (via Passive and Aggressive Methods)
+
+[i] Plugin(s) Identified:
+
+[+] modern-events-calendar-lite
+ | Location: http://mountaineer.thm/wordpress/wp-content/plugins/modern-events-calendar-lite/
+ | Last Updated: 2022-05-10T21:06:00.000Z
+ | [!] The version is out of date, the latest version is 6.5.6
+ |
+ | Found By: Urls In Homepage (Passive Detection)
+ |
+ | Version: 5.16.2 (100% confidence)
+ | Found By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://mountaineer.thm/wordpress/wp-content/plugins/modern-events-calendar-lite/readme.txt
+ | Confirmed By: Change Log (Aggressive Detection)
+ |  - http://mountaineer.thm/wordpress/wp-content/plugins/modern-events-calendar-lite/changelog.txt, Match: '5.16.2'
+
+[+] Enumerating Config Backups (via Aggressive Methods)
+ Checking Config Backups - Time: 00:00:01 <===============> (137 / 137) 100.00% Time: 00:00:01
+
+[i] No Config Backups Found.
+
+[+] Enumerating DB Exports (via Aggressive Methods)
+ Checking DB Exports - Time: 00:00:00 <=====================> (75 / 75) 100.00% Time: 00:00:00
+
+[i] No DB Exports Found.
+
+[+] Enumerating Users (via Aggressive Methods)
+ Brute Forcing Author IDs - Time: 00:00:01 <================> (10 / 10) 100.00% Time: 00:00:01
+
+[i] User(s) Identified:
+
+[+] montblanc
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[+] admin
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[+] everest
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[+] chooyu
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[+] k2
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Fri Apr 17 18:52:03 2026
+[+] Requests Done: 274
+[+] Cached Requests: 6
+[+] Data Sent: 76.007 KB
+[+] Data Received: 778.441 KB
+[+] Memory used: 241.008 MB
+[+] Elapsed time: 00:00:09
+               
+```
