@@ -195,7 +195,7 @@ after doing this stuff i access and we get a login page,so  i try bruteforce and
 we have a password in second mail,so i tried on /wp-admin th3_tall3st_password_in_th3_world and it's work now we have admin access on worpress site
 
 
-and i also run a wpscan on wordpress,and it's hase a vulnerablity to upload a remote file which tirgger rce on remote server 
+and i also run a wpscan on wordpress,and it's hase a vulnerablity to upload a remote file which tirgger rce on remote server and little bit google search i found a exploit ,cve:CVE-2021-24145 and github url:https://github.com/dnr6419/CVE-2021-24145/tree/main
 
 ```bash
 rootme:-->wpscan --url http://mountaineer.thm/wordpress/ -e ap,cb,u,dbe --detection-mode aggressive
